@@ -2,7 +2,6 @@ var	express				= require("express"),
 	rekuire				= require("rekuire"),
 	router				= express.Router(),
 	bodyParser			= require("body-parser"),
-	createConnection	= rekuire('createConnection'),
 	createPayment 			= rekuire("paymentAction"),
 	setInformation 		= rekuire('setInformation');
 

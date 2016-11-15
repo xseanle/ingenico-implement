@@ -1,7 +1,6 @@
 var rekuire				= require("rekuire"),
 	config				= rekuire("config"),
 	createRequest		= rekuire("createRequest"),
-	createConnection	= rekuire("createConnection"),
 	paymentBody			= rekuire("samplePayment"),
 	approveBody			= rekuire("sampleCapture");
 
