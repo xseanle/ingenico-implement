@@ -13,7 +13,7 @@ This will perform a payment process
 * Approve the Payment
 * Save (Tokenize) the Payment Information
 
-Idempotence was set to null, so that payment actions can be tested and seen without having idempotence requests hiding new incoming requests.
+Idempotence was set to null, so that payment actions can be tested and seen continuously
 
 Approving and Tokenizing can be set up to throw in payment Id based on server response, but was set to manually add so that any payment can be approved/tokenized instead of the current process.
 
