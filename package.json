@@ -1,0 +1,24 @@
+{
+  "name": "ingenico-node3.0",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dateformat": "^1.0.12",
+    "ejs": "^2.4.2",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "jquery": "^3.1.0",
+    "jsonschema": "^1.1.0",
+    "lodash": "^4.7.0",
+    "node-uuid": "^1.4.7",
+    "rekuire": "^0.1.9",
+    "traverse": "^0.6.6"
+	},
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
