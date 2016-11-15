@@ -23,9 +23,9 @@ class payment {
 			cb: cb
 		}
 
-		dict.context.idemPotence = {
-			key: 'idempotence'
-		};
+		// dict.context.idemPotence = {
+		// 	key: 'idempotence'
+		// };
 
 		var buildRequest = new createRequest(dict, function(self){
 			this.setParams(self.getResponseBody());

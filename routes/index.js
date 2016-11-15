@@ -14,13 +14,13 @@ router.get("/", function(req, res){
 router.post("/payments", function(req, res){
   var setinfo = new setInformation(req.body, function(){
     var paymentAction = new createPayment();
-    var paymentContext = {
-      idempotence: {
-        key: "X-GCS-Idempotence-Key",
-      }
-    };
+    // var paymentContext = {
+    //   idempotence: {
+    //     key: "X-GCS-Idempotence-Key",
+    //   }
+    // };
 
-    paymentAction.createPayment(paymentContext, function(self) { 
+    paymentAction.createPayment(null, function(self) { 
       var paymentDetails = self.getParams();
       res.render("paymentCreated", {paymentDetails:paymentDetails});
     });
