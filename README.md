@@ -5,6 +5,7 @@ download git folder
 
 run app.js
 open browser to 127.0.0.1:5000
+
 Information should already fill inputs to fit sample information in server
 
 This will perform a payment process
