@@ -71,8 +71,16 @@ class createRequest {
 
 		options.headers["Authorization"] = 'GCS v1HMAC:' + this.context.apiKeyId + ':' + this.getSignature(this.context.secretApiKey, dict.method, 'application/json', options.headers.Date, extraHeaders, options.path);
 		
-		this.doRequest(options, dict.body, function(){
-			cb(this);
+		this.send(options, dict.body, function(error, response){
+			if (error) {
+				console.log(error);
+			} else {
+				if (response.headers["x-gcs-idempotence-request-timestamp"]) {
+					this.setIdempotenceRequestTimestamp(response.headers["x-gcs-idempotence-request-timestamp"]);
+				}
+				this.setResponseBody(response.body);
+				cb(this);
+			}
 		}.bind(this));
 	}
 
@@ -107,24 +115,6 @@ class createRequest {
 			});
 		}
 		return headers;
-	}
-
-	//build request, and save response
-	doRequest(options, postData, cb) {
-		this.send(options, postData, function(error, response){
-			if (error) {
-				//throw new Error(error);
-				console.log(error);
-			} else {
-				//if present, set idempotence request time
-				if (response.headers["x-gcs-idempotence-request-timestamp"]) {
-					this.setIdempotenceRequestTimestamp(response.headers["x-gcs-idempotence-request-timestamp"]);
-				}
-
-				this.setResponseBody(response.body);
-				cb();
-			}
-		}.bind(this));
 	}
 
 	//send request to server
