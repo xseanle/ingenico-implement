@@ -2,7 +2,9 @@ var rekuire				= require("rekuire"),
 	config				= rekuire("config"),
 	createRequest		= rekuire("createRequest"),
 	paymentBody			= rekuire("samplePayment"),
-	approveBody			= rekuire("sampleCapture");
+	approveBody			= rekuire("sampleCapture"),
+	realtimeBody		= rekuire("sampleRealtime"),
+	hostedBody			= rekuire("sampleHost");
 
 //var context = connect.getContext();
 var	postMethod		= 'POST',
@@ -32,6 +34,21 @@ class payment {
 			cb(this);
 		}.bind(this));
 
+	}
+
+	getPayment(paymentId, paymentContext, cb) {
+		var dict = {
+			method: getMethod,
+			path: paymentPath + paymentId,
+			body: null,
+			context: paymentContext,
+			cb:cb
+		}
+
+		var buildRequest = new createRequest(dict, function(self){
+			this.setParams(self.getResponseBody());
+			cb(this);
+		}.bind(this));
 	}
 
 	approvePayment(paymentId, paymentContext, cb) {
@@ -64,6 +81,34 @@ class payment {
 			this.setParams(self.getResponseBody());
 			cb(this);
 		}.bind(this));
+	}
+
+	hostedCheckout(paymentContext, cb) {
+		var dict = {
+			method: postMethod,
+			path: '/v1/' + config.merchantId + '/hostedcheckouts/',
+			body: hostedBody,
+			cb: cb
+		}
+
+		var buildRequest = new createRequest(dict, function(self){
+			this.setParams(self.getResponseBody());
+			cb(this);
+		}.bind(this));
+	}
+
+	realtimeBanking(paymentContext, cb) {
+		var dict = {
+			method: postMethod,
+			path: paymentPath,
+			body: realtimeBody,
+			cb:cb
+		}
+
+		var buildRequest = new createRequest(dict, function(self){
+			this.setParams(self.getResponseBody());
+			cb(this);
+		}.bind(this))
 	}
 
 	setParams(params){

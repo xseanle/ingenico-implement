@@ -24,6 +24,8 @@ router.post("/payments", function(req, res){
       var paymentDetails = self.getParams();
       res.render("paymentCreated", {paymentDetails:paymentDetails});
     });
+
+
   });
 });
 
@@ -40,9 +42,37 @@ router.post("/payments/tokenize", function(req, res){
   var paymentAction = new createPayment();
   paymentAction.tokenizePayment(req.body.paymentId, null, function(self) {
     var paymentDetails = self.getParams();
-    console.log(paymentDetails)
     res.render("paymentCreated", {paymentDetails:paymentDetails});
   });
 });
+
+router.post("/hostedcheckout", function(req, res){
+  var paymentAction = new createPayment();
+  paymentAction.hostedCheckout(null, function(self){
+    var paymentDetails = self.getParams();
+    res.redirect("https://payment." + paymentDetails.partialRedirectUrl);
+  }); 
+});
+
+router.post("/realtimeBanking", function(req, res){
+  var paymentAction = new createPayment();
+  paymentAction.realtimeBanking(null, function(self){
+    var paymentDetails = self.getParams();
+    res.redirect(paymentDetails.merchantAction.redirectData.redirectURL);
+  });
+});
+
+router.get("/getPayment", function(req, res){
+  var paymentAction = new createPayment();
+  var paymentId = req.url.split("=")[1].split("&")[0];
+
+  paymentAction.getPayment(paymentId, null, function(self){
+    var paymentDetails = self.getParams();
+    console.log("I AM HERE")
+    console.log(paymentDetails);
+    res.render("realtimeRes", {paymentDetails:paymentDetails});
+  });
+});
+
 
 module.exports = router;

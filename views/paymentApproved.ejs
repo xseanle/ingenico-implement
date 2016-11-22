@@ -9,23 +9,31 @@
         <label class="form-control-static text-info">Payment ID:</label>
     </div>
 
+    <tab>
     <div class="text-info">
         <label class="form-control-static small" id="paymentID"><%= paymentDetails.payment.id %></label>
     </div>
+    </tab>
 
     <div class="text-info">
         <label class="form-control-static text-info">Payment Status:</label>
     </div>
+
+    <tab>
     <div class="text-info">
         <label class="form-control-static small" id="paymentStatus"><%= paymentDetails.payment.status %></label>
     </div>
+    </tab>
 
     <div class="text-info">
         <label class="form-control-static text-info">Status Code:</label>
     </div>
+
+    <tab>
     <div class="text-info">
         <label class="form-control-static small" id="paymentStatus"><%= paymentDetails.payment.statusOutput.statusCode %></label>
     </div>
+    </tab>
 
     <form action="/payments/tokenize" method="POST">
 	  	<input type="text" name="paymentId" placeholder"Payment ID" class="form-control" require>

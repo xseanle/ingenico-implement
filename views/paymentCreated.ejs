@@ -12,18 +12,22 @@
                     <label class="form-control-static text-info"> Error Message: </label>
                 <div>
 
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static text-info"><%= paymentDetails.errors[0].message %></label>
                 </div>
+                </tab>
 
                 <div class="text-info">
                     <label class="form-control-static text-info"> Error Status: </label>
                 </div>
 
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static text-info"><%=paymentDetails.errors[0].httpStatusCode%><label>
                 </div>
-                
+                <tab>
+
                 <div>
                     <button class="btn btn--right"> Return </button>
                 </div>
@@ -39,23 +43,31 @@
                     <label class="form-control-static text-info">Payment ID:</label>
                 </div>
 
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static small" id="paymentID"><%= paymentDetails.payment.id %></label>
                 </div>
+                </tab>
 
                 <div class="text-info">
                     <label class="form-control-static text-info">Payment Status:</label>
                 </div>
+
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static small" id="paymentStatus"><%= paymentDetails.payment.status %></label>
                 </div>
+                </tab>
 
                 <div class="text-info">
                     <label class="form-control-static text-info">Merchant Status:</label>
                 </div>
+
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static small" id="paymentStatus"><%= paymentDetails.payment.statusOutput.statusCategory %></label>
                 </div>
+                </tab>
 
                 <input type="text" name="paymentId" placeholder"Payment ID" class="form-control" require>
 
@@ -78,18 +90,22 @@
                     <label class="form-control-static text-info"> Response Message isNewToken: </label>
                 <div>
 
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static text-info"><%= paymentDetails.isNewToken %></label>
                 </div>
+                </tab>
 
                 <div class="text-info">
                     <label class="form-control-static text-info"> Token ID: </label>
                 </div>
 
+                <tab>
                 <div class="text-info">
                     <label class="form-control-static text-info"><%=paymentDetails.token%><label>
                 </div>
-                
+                </tab>
+
                 <div>
                     <button class="btn btn--right"> Return </button>
                 </div>
