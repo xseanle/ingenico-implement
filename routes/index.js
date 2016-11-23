@@ -57,6 +57,14 @@ router.post("/hostedcheckout", function(req, res){
 
 router.post("/realtimeBanking", function(req, res){
   var paymentAction = new createPayment();
+  realtimeBody.redirectPaymentMethodSpecificInput = {
+    "paymentProductId": 809,
+    "paymentProduct809SpecificInput": {
+      "issuerId": "INGBNL2A"
+    },
+    "skipAuthentication": false,
+    "returnUrl": "http://127.0.0.1:5000/getPayment"
+  };
   paymentAction.realtimeBanking(null, function(self){
     var paymentDetails = self.getParams();
     res.redirect(paymentDetails.merchantAction.redirectData.redirectURL);
