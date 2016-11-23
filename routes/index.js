@@ -1,8 +1,9 @@
-var	express				= require("express"),
-	rekuire				= require("rekuire"),
-	router				= express.Router(),
-	bodyParser			= require("body-parser"),
-	createPayment 			= rekuire("paymentAction"),
+var	express				  = require("express"),
+	rekuire				    = require("rekuire"),
+	router				    = express.Router(),
+	bodyParser			  = require("body-parser"),
+	createPayment 		= rekuire("paymentAction"),
+  realtimeBody      = rekuire("sampleRealtime"),
 	setInformation 		= rekuire('setInformation');
 
 router.use(bodyParser.urlencoded({extended:true}));
@@ -58,6 +59,23 @@ router.post("/realtimeBanking", function(req, res){
   var paymentAction = new createPayment();
   paymentAction.realtimeBanking(null, function(self){
     var paymentDetails = self.getParams();
+    res.redirect(paymentDetails.merchantAction.redirectData.redirectURL);
+  });
+});
+
+router.post("/paypal", function(req, res){
+  var paymentAction = new createPayment();
+  realtimeBody.redirectPaymentMethodSpecificInput = {
+    "paymentProductId": 840,
+    "skipAuthentication": false,
+    "returnUrl": "http://127.0.0.1:5000/getPayment"
+  };
+  realtimeBody.order.amountOfMoney.currencyCode = "USD";
+  realtimeBody.order.customer.shippingAddress.countryCode = "US";
+  realtimeBody.order.customer.billingAddress.countryCode = "US";
+  paymentAction.realtimeBanking(null, function(self){
+    var paymentDetails = self.getParams();
+    console.log(paymentDetails);
     res.redirect(paymentDetails.merchantAction.redirectData.redirectURL);
   });
 });

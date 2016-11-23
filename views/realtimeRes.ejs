@@ -2,9 +2,16 @@
 
 <div class="container">
     <form action="/getPayment" method="GET">
+
+    <% if (paymentDetails.paymentOutput.redirectPaymentMethodSpecificOutput.paymentProductId == 809) { %>
         <div class="container-header">
             <h3 class="text-center"> Real Time Banking Response </h3>
         </div>
+    <% } else if (paymentDetails.paymentOutput.redirectPaymentMethodSpecificOutput.paymentProductId == 840) { %>
+        <div class="container-header">
+            <h3 class="text-center"> Paypal Transaction Response </h3>
+        </div>
+        <% } %>
 
         <div class="text-info">
             <label class="form-control-static text-info"> Payment Product ID: </label>
