@@ -6,8 +6,7 @@ var _					= require('lodash'),
 	https				= require('https'),
 	uuid 				= require('node-uuid'),
 	obfuscate 			= rekuire('obfuscate'),
-	config				= rekuire('config'),
-	_ 					= require("lodash");
+	config				= rekuire('config');
 
 class createRequest {
 	constructor(dict, cb) {
@@ -15,7 +14,7 @@ class createRequest {
 		this.context = {
 			host: config.apiEndpoint.host,
 			scheme: config.apiEndpoint.scheme,
-			port: config.apiEndpoint.port,
+			//port: config.apiEndpoint.port,
 			apiKeyId: config.apiKeyId,
 			secretApiKey: config.secretApiKey
 		}
@@ -23,7 +22,7 @@ class createRequest {
 				host: config.apiEndpoint.host,
 				protocol: config.apiEndpoint.scheme + ':',
 				method: null,
-				port: config.apiEndpoint.port,
+				//port: config.apiEndpoint.port,
 				headers: {
 					'Content-Type': 'application/json'
 				}
@@ -36,7 +35,7 @@ class createRequest {
 		
 		var headers = {
 			'Content-Type': 'application/json',
-			Date: dateformat('UTC:ddd, dd mmm yyyy HH:MM:ss') + ' UTC'
+			Date: dateformat('UTC:ddd, dd mmm yyyy HH:MM:ss') + " UTC"
 		}
 
 		var options			= _.merge({}, this.context.httpOptions),
@@ -58,19 +57,20 @@ class createRequest {
 
 		//set server meta info
 		var serverMetaInfo = {
-			key: "X-GCS-ServerMetaInfo",
+			key: "x-gcs-servermetainfo",
 			value: {
-				'sdkCreator': 'Ingenico',
-				'sdkIdentifier': 'Ingenico Implementation',
-				'platformIdentifier': process.env['OS'] + ' Node.js/' + process.versions.node
+				//'sdkcreator': 'ingenico',
+				// 'sdkIdentifier': 'Ingenico Implementation',
+				// 'platformIdentifier': process.env['OS'] + ' Node.js/' + process.versions.node
 			}
 		}
-		serverMetaInfo.value = new Buffer(JSON.stringify(serverMetaInfo.value)).toString("base64");
+
+		//serverMetaInfo.value = JSON.stringify(serverMetaInfo.value);
 		options.headers[serverMetaInfo.key] = serverMetaInfo.value;
 		extraHeaders.push(serverMetaInfo);
 
 		options.headers["Authorization"] = 'GCS v1HMAC:' + this.context.apiKeyId + ':' + this.getSignature(this.context.secretApiKey, dict.method, 'application/json', options.headers.Date, extraHeaders, options.path);
-		
+
 		this.send(options, dict.body, function(error, response){
 			if (error) {
 				console.log(error);
@@ -86,17 +86,19 @@ class createRequest {
 
 	//crypto to build authentication found on api references
 	getSignature(SApiKey, method, contentType, date, gcsHeaders, path) {
-		return crypto.createHmac("SHA256", SApiKey).update(method + "\n" + contentType + "\n" + date + "\n" + this.getSortedHeader(gcsHeaders) + path + "\n").digest('base64');
+		return crypto.createHmac("SHA256", SApiKey).update(method + "\n" + contentType + "\n" + date + "\n" + "x-gcs-servermetainfo:" + gcsHeaders[0].value + "\n" + path + "\n").digest('base64');
 	}
 
 	//sorts headers to follow format on api references
 	getSortedHeader(gcsHeaders) {
 		var headers = '';
+		
 		if (gcsHeaders) {
 			var sortedXGCSHeaders = [];
 			_.forEach(gcsHeaders, function(header) {
 				if (header.key.toUpperCase().indexOf("X-GCS") === 0) {
 					sortedXGCSHeaders.push(header);
+					
 				}
 			});
 			sortedXGCSHeaders = sortedXGCSHeaders.sort(function(a,b) {
@@ -110,9 +112,12 @@ class createRequest {
 					return 0;
 				}
 			});
+			
 			_.forEach(sortedXGCSHeaders, function(header) {
 				headers += header.key.toLowerCase() + ":" + header.value + "\n";
+
 			});
+			
 		}
 		return headers;
 	}
@@ -150,6 +155,7 @@ class createRequest {
 	//set response to use elsewhere
 	setResponseBody(response) {
 		this.ingenicoresponse = JSON.parse(response);
+		// this.ingenicoresponse = response;
 	}
 
 	getResponseBody() {

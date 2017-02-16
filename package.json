@@ -13,8 +13,9 @@
     "lodash": "^4.7.0",
     "node-uuid": "^1.4.7",
     "rekuire": "^0.1.9",
+    "socket.io": "^1.7.2",
     "traverse": "^0.6.6"
-	},
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

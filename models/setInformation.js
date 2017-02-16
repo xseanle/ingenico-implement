@@ -11,8 +11,8 @@ class setInformation {
 		paymentBody.cardPaymentMethodSpecificInput.card.cardNumber = requestObject["cardNumber"];
 		paymentBody.cardPaymentMethodSpecificInput.card.cvv = requestObject["cardCVV"];
 		paymentBody.cardPaymentMethodSpecificInput.card.expiryDate = requestObject.expiryMonth + requestObject.expiryYear;
-		this.validateInfo(paymentBody);
-		this.validateInfo(approveBody);
+		//this.validateInfo(paymentBody);
+		//this.validateInfo(approveBody);
 		cb();
 	}
 

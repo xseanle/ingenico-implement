@@ -23,6 +23,8 @@ router.post("/payments", function(req, res){
 
     paymentAction.createPayment(null, function(self) { 
       var paymentDetails = self.getParams();
+      console.log("hey")
+      console.log(paymentDetails)
       res.render("paymentCreated", {paymentDetails:paymentDetails});
     });
 
@@ -100,5 +102,13 @@ router.get("/getPayment", function(req, res){
   });
 });
 
+// router.post("/sessions/create", function(req, res){
+//   var paymentAction = new createPayment();
+//   paymentAction.createSession(null, function(self){
+//     var paymentDetails = self.getParams();
+//     console.log(paymentDetails);
+//     return paymentDetails;
+//   })
+// });
 
 module.exports = router;

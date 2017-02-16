@@ -9,7 +9,16 @@ var rekuire				= require("rekuire"),
 //var context = connect.getContext();
 var	postMethod		= 'POST',
 	getMethod		= 'GET',
-	paymentPath		= '/v1/' + config.merchantId + '/payments/';
+	paymentPath		= '/v1/' + config.merchantId + '/payments/',
+	sessionBody		= {
+		"tokens": [
+				"126166b16ed04b3ab85fb06da1d7a167",
+                "226166b16ed04b3ab85fb06da1d7a167",
+                "122c5b4d-dd40-49f0-b7c9-3594212167a9",
+                "326166b16ed04b3ab85fb06da1d7a167",
+                "426166b16ed04b3ab85fb06da1d7a167"
+			]
+	};
 
 class payment {
 	constructor() {
@@ -109,6 +118,20 @@ class payment {
 			this.setParams(self.getResponseBody());
 			cb(this);
 		}.bind(this))
+	}
+	
+	createSession(paymentContext, cb) {
+		var dict = {
+			method: postMethod,
+			path: '/v1/' + config.merchantId + '/sessions/',
+			body: sessionBody,
+			cb: cb
+		}
+		
+		var buildRequest = new createRequest(dict, function(self){
+			this.setParams(self.getResponseBody());
+			cb(this);
+		}.bind(this));
 	}
 
 	setParams(params){
